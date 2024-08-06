@@ -4,7 +4,7 @@ namespace Src;
 
 use App\Controller;
 
-class HomeController extends Controller
+class UsersController extends Controller
 {
     public function execute()
     {
