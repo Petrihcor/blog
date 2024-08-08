@@ -6,7 +6,7 @@ use App\Controller;
 
 class RegistrationController extends Controller
 {
-    public function execute()
+    public function index()
     {
         $this->view->render('registration');
     }

@@ -6,12 +6,9 @@ use App\Controller;
 
 class HomeController extends Controller
 {
-    public function execute()
+    public function index()
     {
-        $usersdata = $this->database->findall('users');
 
-        $this->view->render('main', [
-            'usersdata' => $usersdata
-        ]);
+        $this->view->render('main');
     }
 }

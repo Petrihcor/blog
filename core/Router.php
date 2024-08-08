@@ -18,6 +18,7 @@ class Router
 
     public function dispatch(string $method, string $path) :void
     {
+
         foreach ($this->routes as $route) {
             if ($route['method'] == $method && $route['path'] == $path){
                 $controller = new $route['handle'][0]();

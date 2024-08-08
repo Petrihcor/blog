@@ -7,7 +7,7 @@ use Src\classes\User;
 
 class LoginController extends Controller
 {
-    public function execute()
+    public function index()
     {
         $this->view->render('login');
     }
@@ -20,6 +20,7 @@ class LoginController extends Controller
         if (password_verify($_POST['password'], $userdata['password'])){
             $user = new User($userdata['id'], $userdata['name'], $userdata['email'], $userdata['password']);
             $this->session->set('name', $user->getName());
+            $this->session->set('id', $user->getId());
             $this->session->set('email', $user->getEmail());
 
             $this->redirect("/");
