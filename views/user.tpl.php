@@ -1,6 +1,5 @@
 <?php
     /**
-     * @var array $users
      * @var \Src\classes\User $user
      *
      **/
@@ -11,8 +10,8 @@
     <div class="container mt-4">
         <div class="row g-0">
             <ul class="list-group">
-                <li class="list-group-item">Имя: </li>
-                <li class="list-group-item">Почта: </li>
+                <li class="list-group-item">Имя: <?=$user->getName(); ?></li>
+                <li class="list-group-item">Почта: <?= $user->getEmail(); ?></li>
                 <li class="list-group-item"></li>
             </ul>
         </div>

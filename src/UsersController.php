@@ -21,12 +21,15 @@ class UsersController extends Controller
         ]);
     }
 
-    public function showUser()
+    public function showUser($id)
     {
         $userdata = $this->database->find('users', [
-            'id' => $_GET['id']
+            'id' => $id
         ]);
-        $this->view->render('user');
+        $user = new User($userdata['id'], $userdata['name'], $userdata['email'], $userdata['password']);
+        $this->view->render('user', [
+            "user" => $user
+        ]);
     }
     
 }

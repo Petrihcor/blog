@@ -20,10 +20,18 @@ class Router
     {
 
         foreach ($this->routes as $route) {
-            if ($route['method'] == $method && $route['path'] == $path){
-                $controller = new $route['handle'][0]();
-                $action = $route['handle'][1];
-                $controller->$action();
+
+            // Я не понимаю, что это
+            $pattern = preg_replace('/\{[^\}]+\}/', '([^/]+)', $route['path']);
+            $pattern = str_replace('/', '\/', $pattern);
+
+
+            if ($route['method'] === $method && preg_match('/^' . $pattern . '$/', $path, $matches)) {
+                array_shift($matches); // Удаляем первый элемент, который является полным совпадением
+
+                $controller = new $route['handle'][0]();  // Создаем объект контроллера
+                $action = $route['handle'][1];            // Определяем метод контроллера
+                $controller->$action(...$matches);        // Вызываем метод контроллера с параметрами
                 return;
             }
         }
