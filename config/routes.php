@@ -18,6 +18,7 @@ $route = new Router();
 
 $route
     ->add('GET', '/', [HomeController::class, 'index'])
+    ->add('GET', '/posts', [PostController::class, 'showPosts'])
     ->add('GET', '/users', [UsersController::class, 'index'])
     ->add('GET', "/user/{id}", [UsersController::class, 'showUser'])
     ->add('GET', '/login', [LoginController::class, 'index'])
