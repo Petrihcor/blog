@@ -11,7 +11,7 @@ class Post
         private string $content,
         private string $date,
         private string $update,
-        private int $authorId
+        private string $author
     )
     {
     }
@@ -97,19 +97,21 @@ class Post
     }
 
     /**
-     * @return int
+     * @return string
      */
-    public function getAuthorId(): int
+    public function getAuthor(): string
     {
-        return $this->authorId;
+        return $this->author;
     }
 
     /**
-     * @param int $authorId
+     * @param string $author
      */
-    public function setAuthorId(int $authorId): void
+    public function setAuthor(string $author): void
     {
-        $this->authorId = $authorId;
+        $this->author = $author;
     }
+
+
 
 }

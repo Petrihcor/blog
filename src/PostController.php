@@ -27,20 +27,48 @@ class PostController extends Controller
 
     public function showPosts()
     {
-        $postsdata = $this->database->findall('posts');
+        //$postsdata = $this->database->findall('posts');
+        $postsdata = $this->database->leftJoin(
+            'posts',
+            'users',
+            [
+                'id', 'title', 'date', 'updateDate', 'content'
+            ],
+            [
+                'name'
+            ],
+            'author_id',
+            'id',
+            []
+        );
         $posts = [];
         foreach ($postsdata as $postdata) {
-            $posts[] = new Post($postdata['id'], $postdata['title'], $postdata['content'], $postdata['date'], $postdata['updateDate'], $postdata['author_id']);
+            $posts[] = new Post($postdata['id'], $postdata['title'], $postdata['content'], $postdata['date'], $postdata['updateDate'], $postdata['name']);
         }
         $this->view->render('posts', [
             'posts' => $posts
         ]);
     }
-    public function showPost() {
-        $postdata = $this->database->find('posts', [
-            'id' => $_GET["id"]
-        ]);
-        $post = new Post($postdata['id'], $postdata['title'], $postdata['content'], $postdata['date'], $postdata['updateDate'], $postdata['author_id']);
+    public function showPost(int $id) {
+
+
+        $postdata = $this->database->leftJoin(
+            'posts',
+            'users',
+            [
+                'id', 'title', 'date', 'updateDate', 'content'
+            ],
+            [
+                'name'
+            ],
+            'author_id',
+            'id',
+            [
+                'id' => $id
+            ]
+        );
+
+        $post = new Post($postdata[0]['id'], $postdata[0]['title'], $postdata[0]['content'], $postdata[0]['date'], $postdata[0]['updateDate'], $postdata[0]['name']);
         $this->view->render('post', [
             'post' => $post
         ]);
