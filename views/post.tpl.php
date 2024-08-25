@@ -15,6 +15,7 @@
             <div class="card-body">
                 <p class="card-text"><?= $post->getContent(); ?></p>
                 <p class="card-text"><?= $post->getAuthor(); ?></p>
+                <a href="/post/<?= $post->getId(); ?>/edit"><p class="card-title">Редактировать</p></a>
                 <div class="d-grid gap-2 d-sm-flex">
                 </div>
             </div>

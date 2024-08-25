@@ -135,4 +135,40 @@ class Database
         }
         return $stmt->fetchAll();
     }
+
+    public function edit(string $table, array $data, array $conditions): bool
+    {
+        // Формируем строку для SET в SQL-запросе
+        $setParts = [];
+        foreach ($data as $key => $value) {
+            $setParts[] = "$key = :$key";
+        }
+        $setString = implode(', ', $setParts);
+
+        // Формируем строку для WHERE в SQL-запросе
+        $conditionParts = [];
+        foreach ($conditions as $key => $value) {
+            $conditionParts[] = "$key = :cond_$key";
+        }
+        $conditionString = implode(' AND ', $conditionParts);
+
+        // Формируем полный SQL-запрос
+        $sql = "UPDATE $table SET $setString WHERE $conditionString";
+
+        // Подготавливаем запрос
+        $stmt = $this->connection->prepare($sql);
+
+        // Привязываем параметры для SET
+        foreach ($data as $key => $value) {
+            $stmt->bindValue(":$key", $value);
+        }
+
+        // Привязываем параметры для WHERE
+        foreach ($conditions as $key => $value) {
+            $stmt->bindValue(":cond_$key", $value);
+        }
+
+        // Выполняем запрос
+        return $stmt->execute();
+    }
 }

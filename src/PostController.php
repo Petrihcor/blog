@@ -9,7 +9,6 @@ class PostController extends Controller
 {
     public function index()
     {
-
         $this->view->render('createPost');
     }
 
@@ -27,7 +26,6 @@ class PostController extends Controller
 
     public function showPosts()
     {
-        //$postsdata = $this->database->findall('posts');
         $postsdata = $this->database->leftJoin(
             'posts',
             'users',
@@ -73,5 +71,29 @@ class PostController extends Controller
             'post' => $post
         ]);
 
+    }
+
+    public function showEditPost(int $id)
+    {
+        $postdata = $this->database->find('posts',[
+           'id' =>  $id
+        ]);
+        $post = new Post($postdata['id'], $postdata['title'], $postdata['content'], $postdata['date'], $postdata['updateDate'], $postdata['author_id']);
+        $this->view->render('editPost', [
+            'post' => $post
+        ]);
+    }
+
+    public function editPost()
+    {
+        $this->database->edit('posts', [
+            'title' => $_POST['title'],
+            'content' => $_POST['content'],
+            'updateDate' => date('Y-m-d H:i:s')
+        ],
+        [
+            'id' => $_POST['id']
+        ]);
+        $this->redirect("/post/{$_POST['id']}");
     }
 }
